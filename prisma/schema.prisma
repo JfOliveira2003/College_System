@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model classmate {
+  id                                      Int       @id @default(autoincrement())
+  classmate_code                          String?   @db.VarChar(40)
+  student_id                              Int?
+  teacher_id                              Int?
+  student                                 student?  @relation(fields: [student_id], references: [id], onDelete: Restrict, map: "fk_student_id")
+  teacher_classmate_teacher_idToteacher   teacher?  @relation("classmate_teacher_idToteacher", fields: [teacher_id], references: [id], onDelete: Restrict, map: "fk_teacher_id")
+  teacher_teacher_classmate_idToclassmate teacher[] @relation("teacher_classmate_idToclassmate")
+
+  @@index([student_id], map: "fk_student_id")
+  @@index([teacher_id], map: "fk_teacher_id")
+}
+
+model course {
+  id                                 Int       @id @default(autoincrement())
+  name_                              String?   @db.VarChar(120)
+  type_                              String?   @db.VarChar(80)
+  integral                           Boolean?
+  subjects_id                        Int?
+  work_load                          Int?
+  student_id                         Int?
+  teacher_id                         Int?
+  student_course_student_idTostudent student?  @relation("course_student_idTostudent", fields: [student_id], references: [id], onDelete: Restrict, map: "fk_student_table_course_id")
+  subject_                           subject_? @relation(fields: [subjects_id], references: [id], onDelete: Restrict, map: "fk_subjects_id")
+  teacher                            teacher?  @relation(fields: [teacher_id], references: [id], onDelete: Restrict, map: "fk_teacher_table_course_id")
+  student_student_course_idTocourse  student[] @relation("student_course_idTocourse")
+
+  @@index([student_id], map: "fk_student_table_course_id")
+  @@index([subjects_id], map: "fk_subjects_id")
+  @@index([teacher_id], map: "fk_teacher_table_course_id")
+}
+
+model student {
+  id                                Int         @id @default(autoincrement())
+  registration                      String?     @db.VarChar(30)
+  name_                             String?     @db.VarChar(80)
+  identification_number             Int?
+  age                               DateTime?   @db.Date
+  course_id                         Int?
+  classmate                         classmate[]
+  course_course_student_idTostudent course[]    @relation("course_student_idTostudent")
+  course_student_course_idTocourse  course?     @relation("student_course_idTocourse", fields: [course_id], references: [id], onDelete: Restrict, map: "fk_course_id")
+
+  @@index([course_id], map: "fk_course_id")
+}
+
+model subject_ {
+  id        Int      @id @default(autoincrement())
+  title     String?  @db.VarChar(120)
+  work_load Int?
+  points    Int?
+  course    course[]
+}
+
+model teacher {
+  id                                        Int         @id @default(autoincrement())
+  name_                                     String?     @db.VarChar(80)
+  registration_code                         String?     @db.VarChar(30)
+  academic_background                       String?     @db.VarChar(40)
+  classmate_id                              Int?
+  classmate_classmate_teacher_idToteacher   classmate[] @relation("classmate_teacher_idToteacher")
+  course                                    course[]
+  classmate_teacher_classmate_idToclassmate classmate?  @relation("teacher_classmate_idToclassmate", fields: [classmate_id], references: [id], onDelete: Restrict, map: "fk_classmate_id")
+
+  @@index([classmate_id], map: "fk_classmate_id")
+}
