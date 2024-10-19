@@ -1,14 +1,14 @@
+const home_controller = require('./Controllers/homeController');
+const authController = require('./Controllers/authenticationController');
+
 import express from 'express';
 
 
-const app = express();
+const router = express.Router();
 
 const port : number = 3000;
 
-app.get('/', (req, res) => {
-    res.send('Hello world');
-})
+router.get('/About', home_controller.about);
 
-app.listen(port, () => {
-    console.log('Running')
-})
+router.post('/Login', authController.Login);
+
