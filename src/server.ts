@@ -6,9 +6,10 @@ import express from 'express';
 
 const router = express.Router();
 
-const port : number = 3000;
 
-router.get('/About', home_controller.about);
 
-router.post('/Login', authController.Login);
+exports.about = router.get('/About', home_controller.about);
+exports.test = router.get(/.*test$/, home_controller.test)
+
+exports.auth = router.post('/Login', authController.Login);
 

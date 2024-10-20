@@ -16,3 +16,7 @@ exports.Login = async (req:any, res:any) => {
         res.send({authentication: true});
     }     
 }
+
+exports.Logut = async (req:any, res:any) => {
+    res.send({authentication : false});
+}
