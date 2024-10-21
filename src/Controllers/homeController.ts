@@ -10,6 +10,10 @@ exports.about = async (req: any, res: any) => {
     res.send(resp);
 };
 
+exports.test = async (req:any, res:any) => {
+    res.send("Hello world");
+}
+
 exports.News =  async(req:any, res:any) => {
     
 }
