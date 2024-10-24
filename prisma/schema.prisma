@@ -46,6 +46,7 @@ model student {
   identification_number             Int?
   age                               DateTime?   @db.Date
   course_id                         Int?
+  email                             String?     @db.VarChar(120)
   classmate                         classmate[]
   course_course_student_idTostudent course[]    @relation("course_student_idTostudent")
   course_student_course_idTocourse  course?     @relation("student_course_idTocourse", fields: [course_id], references: [id], onDelete: Restrict, map: "fk_course_id")

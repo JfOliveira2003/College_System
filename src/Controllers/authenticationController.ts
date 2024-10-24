@@ -26,15 +26,26 @@ exports.forgetPassword = async (req:any, res:any) => {
     const getData_prisma = await prisma.student.findFirst({
         where:
         {
-
+            email: email_
         }
-    })
+    });
+    if(getData_prisma != null) res.send({success:true});
+    else res.send({success: false})
 }
 
 exports.resetPassword = async (req:any, res:any) => {
-    const password_ = req.body;
+    const resp= JSON.parse(req.body);
+    const password_ = resp.password;
+    const new_password = resp.new_password;
+    const id = resp.id;
 
-    const getData_prisma = await prisma.student.update
+    const getData_prisma = await prisma.student.update({
+
+        where: {id: id},
+        data: {
+            registration: new_password
+        }
+    })
 
     if(getData_prisma == null) res.send({reset: false});
 
