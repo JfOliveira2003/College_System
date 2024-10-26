@@ -1,5 +1,5 @@
-import express from 'express';
 import { PrismaClient } from '@prisma/client'
+import { SuiteContext } from 'node:test';
 const prisma = new PrismaClient();
 
 exports.Login = async (req:any, res:any) => {
@@ -50,4 +50,22 @@ exports.resetPassword = async (req:any, res:any) => {
     if(getData_prisma == null) res.send({reset: false});
 
     else res.send({reset: true});
+}
+
+exports.Register = async(req:any, res:any) => {
+
+    if(req.body == null) res.send({success: false});
+    else{
+        const resp = JSON.parse(req.body);
+
+        const data = await prisma.user.create({
+            data:{
+                name: resp.name,
+                email: resp.email,
+                password: resp.password,
+                age: resp.age,
+            }
+        });
+        res.send(data, {success: true});
+    }
 }

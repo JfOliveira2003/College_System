@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import exp from 'constants';
+import { title } from 'process';
 const prisma = new PrismaClient();
 
 
@@ -83,7 +84,7 @@ exports.createSubject = async (req:any, res:any) => {
 }
 
 exports.getCourse = async(req:any, res:any) => {
-    const myData = JSON.parse(req.body);
+    const myData = req.params.id;
     if(myData === null) res.send({success : false});
 
     else{
@@ -97,7 +98,7 @@ exports.getCourse = async(req:any, res:any) => {
 }
 
 exports.getSubject = async(req:any, res:any) => {
-    const myData = JSON.parse(req.body);
+    const myData = req.params.id
     if(myData === null) res.send({success : false});
 
     else{
@@ -119,7 +120,7 @@ exports.getAllSubjects = async (req:any, res:any) => {
 }
 
 exports.deleteSubject = async (req:any, res:any) => {
-    const myData = JSON.parse(req.body);
+    const myData = req.params.id;
     if(myData === null) res.send({success : false});
 
     else{
@@ -129,5 +130,46 @@ exports.deleteSubject = async (req:any, res:any) => {
             }
         });
         res.send(data);
+    }
+}
+
+exports.updateSubject = async (req:any, res:any) => {
+    const myData = JSON.parse(req.body);
+    if(myData === null) res.send({success : false});
+
+    else{
+        if(myData.desire === 'name'){
+            const data = prisma.subject_.update({
+                where: {
+                    id: myData.id,
+                },
+                data:{
+                    title: myData.name
+                }
+            });
+            res.send(data);
+        }
+        if(myData.desire === "work_load"){
+            const data = prisma.subject_.update({
+                where: {
+                    id: myData.id,
+                },
+                data:{
+                    work_load: myData.work_load
+                }
+            });
+            res.send(data);
+        }
+        if(myData.desire === "points"){
+            const data = prisma.subject_.update({
+                where: {
+                    id: myData.id,
+                },
+                data:{
+                    points: myData.points
+                }
+            });
+            res.send(data);
+        }
     }
 }
