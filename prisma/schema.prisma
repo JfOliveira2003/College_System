@@ -68,6 +68,7 @@ model teacher {
   registration_code                         String?     @db.VarChar(30)
   academic_background                       String?     @db.VarChar(40)
   classmate_id                              Int?
+  age                                       DateTime    @db.Date
   classmate_classmate_teacher_idToteacher   classmate[] @relation("classmate_teacher_idToteacher")
   course                                    course[]
   classmate_teacher_classmate_idToclassmate classmate?  @relation("teacher_classmate_idToclassmate", fields: [classmate_id], references: [id], onDelete: Restrict, map: "fk_classmate_id")
