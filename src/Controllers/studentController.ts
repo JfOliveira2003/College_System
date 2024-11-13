@@ -50,6 +50,19 @@ exports.getStudent = async (req:any, res:any) => {
     }
 }
 
+exports.deleteStudent = async(req:any, res:any) => {
+    if(req.body === null) res.send({success: false});
+
+    else{
+        const myData = JSON.parse(req.body);
+        const id = myData.id;
+        const new_name =  myData.name;
+        const updateStudent = prisma.student.delete({
+            where: {id: id}
+        })
+    }
+}
+
 exports.getAllStudents = async(req:any, res:any) => {
     const data = prisma.student.findMany();
 }

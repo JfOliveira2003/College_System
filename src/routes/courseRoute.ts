@@ -9,3 +9,9 @@ exports.updateCourse = router.post('/updateCourse/:id', courseController.updateC
 
 
 exports.createSubject = router.post('/createSubject', courseController.createSubject);
+
+
+exports.updateSubject = router.post('/updateSubject/:id', courseController.updateSubject);
+exports.deleteSubject = router.post('deleteSubject/:id', courseController.deleteSubject);
+exports.getAllSubjects = router.post('/allSubjects', courseController.getAllSubjects);
+exports.getSubject = router.post('/getSubject/:id', courseController.getSubject);

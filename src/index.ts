@@ -2,11 +2,11 @@ import express from 'express';
 
 const auth = require('./routes/authenticationRoute');
 const teacher = require('./routes/teacherRoute');
-const student = require('./routes/studentRoute');
+const student = require('./routes/studentRoute.ts');
 const course = require('./routes/courseRoute');
 
 const app = express();
-const port : number = 3000; 
+const port : number = 3001; 
 
 
 app.use(student.createStudent);
